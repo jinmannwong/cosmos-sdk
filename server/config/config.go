@@ -140,15 +140,12 @@ func DefaultConfig() *Config {
 
 // GetConfig returns a fully parsed Config object.
 func GetConfig() Config {
-	globalLabelsRaw, ok := viper.Get("telemetry.global-labels").([]interface{})
-	var globalLabels [][]string
-	if ok {
-		globalLabels = make([][]string, 0, len(globalLabelsRaw))
-		for _, glr := range globalLabelsRaw {
-			labelsRaw := glr.([]interface{})
-			if len(labelsRaw) == 2 {
-				globalLabels = append(globalLabels, []string{labelsRaw[0].(string), labelsRaw[1].(string)})
-			}
+	globalLabelsRaw := viper.Get("telemetry.global-labels").([]interface{})
+	globalLabels := make([][]string, 0, len(globalLabelsRaw))
+	for _, glr := range globalLabelsRaw {
+		labelsRaw := glr.([]interface{})
+		if len(labelsRaw) == 2 {
+			globalLabels = append(globalLabels, []string{labelsRaw[0].(string), labelsRaw[1].(string)})
 		}
 	}
 
